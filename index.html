@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Learning AngualarJS</title>
+    <script src="js/angular.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+<div ng-controller="PlayerController">
+    <button ng-click="play()" class="button" ng-show="!playing">Play</button>
+    <button ng-click="stop()" class="button alert" ng-show="playing">Stop</button>
+</div>
+</body>
+</html>
