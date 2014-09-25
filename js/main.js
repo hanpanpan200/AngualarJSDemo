@@ -1,13 +1,27 @@
 /**
  * Created by Administrator on 2014/9/23.
  */
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', []),
+    apiKey = 'MDE2ODM0MDMzMDE0MTE2MDk5NzdjZWJmNw001',
+    nprUrl = 'http://api.npr.org/query?id=61&fields=relatedLink,title,byline,text,audio,image,pullQuote,all&output=JSON';
+app.controller('PlayerController', function ($scope, $http) {
+    $http({
+        method: 'JSONP',
+        url: nprUrl + '&apiKey=' + apiKey + '&callback=JSON_CALLBACK'
+    }).success(function (data, status) {
+        $scope.programs = data.list.story;
+    }).error(function (data, status) {
 
-app.controller('PlayerController', function ($scope) {
+    });
     $scope.playing = false;
     $scope.audio = document.createElement('audio');
-    $scope.audio.src = "audio/2.mp3";
-    $scope.play = function () {
+
+    $scope.play = function (program) {
+        if ($scope.playing) {
+            $scope.audio.pause();
+        }
+        var url = program.audio[0].format.mp4.$text;
+        $scope.audio.src = url;
         $scope.audio.play();
         $scope.playing = true;
     };
@@ -21,5 +35,5 @@ app.controller('PlayerController', function ($scope) {
         });
     });
 });
-app.controller('RelatedController',function ($scope) {
+app.controller('RelatedController', function ($scope) {
 });
